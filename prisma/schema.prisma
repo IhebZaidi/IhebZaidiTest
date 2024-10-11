@@ -1,0 +1,18 @@
+datasource db {
+  provider = "mysql" // ou "mysql", "sqlite", etc. selon votre base de données
+  url      = env("DATABASE_URL") // l'URL de connexion à votre base de données
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  dob       DateTime
+  address   String
+  phone     String
+  email     String   @unique
+}

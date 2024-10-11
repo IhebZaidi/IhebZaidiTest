@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true, // If you intend to emit JS from TS, set this to false
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve", // Preserves JSX for Next.js to process
+    "incremental": true, // Useful for speeding up subsequent builds
+    "plugins": [
+      {
+        "name": "next" // Next.js plugin for TypeScript support
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"] // Adjust based on your project structure, e.g., "./src/*" for `src` folder
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "types/**/*.d.ts"
+  ],
+  "exclude": ["node_modules"]
+}
