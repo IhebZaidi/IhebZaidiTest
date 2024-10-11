@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../lib/prisma'; // Utilisation de Prisma ou autre ORM
+import prisma from '../../lib/prisma'; // Assurez-vous que le chemin est correct
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -16,13 +16,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(200).json(existingUser);
       }
 
+      // Convertir dob en objet Date valide
+      const parsedDob = new Date(dob);
+      if (isNaN(parsedDob.getTime())) {
+        return res.status(400).json({ error: 'Date de naissance invalide' });
+      }
+
       // Créez un nouvel utilisateur si l'email n'existe pas
       const newUser = await prisma.user.create({
         data: {
           email,
           firstName,
           lastName,
-          dob,
+          dob: parsedDob, // Utilisation de la date formatée
           address,
           phone,
         },
