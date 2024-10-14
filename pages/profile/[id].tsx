@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react"; // Import the sign-out function
+import Image from "next/image"; // Use Next.js Image component
 
 interface User {
   firstName: string;
@@ -32,9 +33,7 @@ export default function Profile() {
           } else {
             setErrorMessage("Erreur lors du chargement des données de l'utilisateur.");
           }
-        } catch (error) {
-          setErrorMessage("Erreur réseau lors du chargement des données.");
-        } finally {
+        }  finally {
           setLoading(false);
         }
       };
@@ -92,18 +91,20 @@ export default function Profile() {
       <div>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="/fonts/icomoon/style.css" />
-        <link rel="stylesheet" href="/css/owl.carousel.min.css" />
-        <link rel="stylesheet" href="/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/css/style.css" />
         <title>Mon Profil</title>
 
         <div className="content">
           <div className="container">
             <div className="row">
               <div className="col-md-6 order-md-2">
-                <img src="/images/blog_B4T_Security.png" alt="Image" className="img-fluid" />
+                {/* Use Next.js Image Component */}
+                <Image
+                  src="/images/blog_B4T_Security.png"
+                  alt="Image"
+                  width={500}
+                  height={300}
+                  className="img-fluid"
+                />
               </div>
               <div className="col-md-6 contents">
                 <div className="row justify-content-center">

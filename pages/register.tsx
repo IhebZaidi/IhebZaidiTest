@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from 'next/image';  // Use next/image instead of <img> tag
 
 export default function Register() {
   const { data: session } = useSession();
@@ -22,17 +23,16 @@ export default function Register() {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // useEffect to update form data with session info
   useEffect(() => {
-    // Update form with session data
     if (session) {
       setFormData((prevFormData) => ({
         ...prevFormData,
         firstName: firstName || prevFormData.firstName,
         lastName: lastName || prevFormData.lastName,
-        // You can add other fields if available in session
       }));
     }
-  }, [session]);
+  }, [session, firstName, lastName]);  // Include firstName and lastName in dependency array
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -78,10 +78,9 @@ export default function Register() {
       const distance = calculateDistance(latitude, longitude, parisLatitude, parisLongitude);
 
       if (distance <= 50) {
-        // L'adresse est valide et dans la zone de 50 km de Paris
+        // Address is valid and within 50km of Paris
         console.log("Adresse valide");
 
-        // Envoyer les données à l'API
         const response = await fetch('/api/register', {
           method: 'POST',
           headers: {
@@ -95,10 +94,10 @@ export default function Register() {
 
         if (response.ok) {
           const data = await response.json();
-          router.push(`/profile/${data.id}`); // Redirection vers le profil de l'utilisateur
+          router.push(`/profile/${data.id}`); // Redirect to user profile
         } else if (response.status === 409) {
           const data = await response.json();
-          setErrorMessage(data.error); // Afficher le message d'erreur si l'e-mail est déjà utilisé
+          setErrorMessage(data.error); // Show error message if email is already used
         } else {
           setErrorMessage("Erreur lors de l'inscription.");
         }
@@ -114,20 +113,20 @@ export default function Register() {
   return (
     <main>
       <div>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="/fonts/icomoon/style.css" />
-        <link rel="stylesheet" href="/css/owl.carousel.min.css" />
-        <link rel="stylesheet" href="/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="/css/style.css" />
         <title>Sauvegarder les informations</title>
 
         <div className="content">
           <div className="container">
             <div className="row">
               <div className="col-md-6 order-md-2">
-                <img src="/images/blog_B4T_Security.png" alt="Image" className="img-fluid" />
+                <Image
+                  src="/images/blog_B4T_Security.png"
+                  alt="Image"
+                  width={500}
+                  height={300}
+                  className="img-fluid"
+                  priority={true}
+                />
               </div>
               <div className="col-md-6 contents">
                 <div className="row justify-content-center">
